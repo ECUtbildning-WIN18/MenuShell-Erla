@@ -1,4 +1,5 @@
 ﻿using MenuShellerlma.Domain;
+using MenuShellerlma.Service;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,7 @@ namespace MenuShellerlma.Views
     class AdministrationView : ConsoleView
     {
         private readonly IDictionary<string, User> _users;
+        private IAuthenticationService authenticationService;
 
         public AdministrationView(IDictionary<string, User> users)
         {
@@ -21,7 +23,7 @@ namespace MenuShellerlma.Views
             {
                 base.Display();
                 Console.WriteLine("\n # Admin menu");
-                Console.WriteLine("\n (1) Manage users \n (2) Exit ");
+                Console.WriteLine("\n (1) Manage users \n (2) Exit");
                 Console.Write(" >> ");
 
                 var answer = Console.ReadKey(true);
@@ -32,9 +34,11 @@ namespace MenuShellerlma.Views
                         var manageUser = new ManageUserView(_users);
                         manageUser.Display();
                         break;
+
                     case ConsoleKey.D2:
                         loop = false;
                         break;
+          
                     default:
                         break;
                 }

@@ -24,7 +24,7 @@ namespace MenuShellerlma.Views
                 base.Display();
 
                 Console.WriteLine("\n # Manage users");
-                Console.WriteLine("\n (1) Add user\n (2) Delete user");
+                Console.WriteLine("\n (1) Add user\n (2) Search user");
                 Console.Write(" >> ");
 
                 var answer = Console.ReadKey(true);
@@ -37,8 +37,10 @@ namespace MenuShellerlma.Views
                         break;
 
                     case ConsoleKey.D2:
-                        var deleteUser = new DeleteUserView(_users);
-                        deleteUser.Display();
+                        var searchUser = new SearchUserView(_users);
+                        searchUser.Display();
+                        //var deleteUser = new DeleteUserView(_users);
+                        //deleteUser.Display();
                         break;
                     case ConsoleKey.Escape:
                         loop = false;

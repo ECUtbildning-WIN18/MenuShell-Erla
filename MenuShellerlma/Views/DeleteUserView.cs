@@ -22,20 +22,32 @@ namespace MenuShellerlma.Views
             {
                 base.Display();
 
-                Console.WriteLine("\n # Delete user");
+                Console.WriteLine("\n # Delete user \n");
 
                 foreach(var user in _users)
                 {
                     Console.WriteLine(user.Value.UserName);
                 }
 
-                Console.WriteLine("\n Witch one do you want to delete? ");
+                Console.WriteLine("\n Witch one do you want to delete?");
                 Console.Write(" >> ");
 
                 var answer = Console.ReadLine();
+
                 if(_users.ContainsKey(answer))
                 {
-                    _users.Remove(answer);
+                    Console.WriteLine($"Are you sure you want to delete {answer}? (Y)es (N)o");
+                    var deleteUser = Console.ReadLine();
+
+                    if(deleteUser == "y" || deleteUser == "Y")
+                    {
+                        _users.Remove(answer);
+                    }
+                    else
+                    {
+                        loop = false;
+                    }
+                    
                 }
                 else
                 {
