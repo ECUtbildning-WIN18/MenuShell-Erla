@@ -1,6 +1,7 @@
 ﻿using MenuShellerlma.Domain;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace MenuShellerlma.Service
@@ -16,15 +17,39 @@ namespace MenuShellerlma.Service
 
         public User Authenticate(string username, string password)
         {
-            User user = null;
+            string queryString = "SELECT * FROM [Users]";
 
-            var users = _loadUser.LoadUsers();
-
-            if(users.ContainsKey(username) && users[username].Password == password)
+            using (var connection = new SqlConnection(Helper.connectionString))
             {
-                user = users[username];
+                var sqlCommand = new SqlCommand(queryString, connection);
+
+                connection.Open();
+
+                var reader = sqlCommand.ExecuteReader();
+
+                User user;
+
+                while (reader.Read())
+                {
+                    if (reader["UserName"].ToString() == username && reader["Password"].ToString() == password)
+                    {
+                        var role = reader["Role"].ToString();
+
+                        if(Enum.TryParse(role, out Role resault))
+                        {
+                            user = new User(username, password, resault);
+
+                            return user;
+                        }
+                    }
+                }
+               
+
+               
+                return null;
             }
-            return user;
+
+          
         }
     }
 }

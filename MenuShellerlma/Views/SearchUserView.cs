@@ -2,6 +2,7 @@
 using MenuShellerlma.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading;
 
@@ -18,7 +19,7 @@ namespace MenuShellerlma.Views
 
         public override string Display()
         {
-            var count = 0;
+            //var count = 0;
             bool loop = true;
 
             do
@@ -30,24 +31,28 @@ namespace MenuShellerlma.Views
 
                 var answer = Console.ReadLine();
 
-                foreach (var user in _users)
-                {
-                    if (user.Value.UserName.Contains(answer))
-                    {
-                        Console.WriteLine(user.Key);
-                        count += 1;
-                        //var search = user.Where(x => x.UserName == username);
-                    }
-                }
+                var choice = new SearchSql();
 
-                if(count < 1)
-                {
-                    Console.WriteLine($"No user found matching the search term {answer}");
-                    Thread.Sleep(2000);
-                    Console.Clear();
-                    Display();
+                choice.Search(answer);
+
+                //foreach (var user in _users)
+                //{
+                //    if (user.Value.UserName.Contains(answer))
+                //    {
+                //        Console.WriteLine(user.Key);
+                //        count += 1;
+                //        //var search = user.Where(x => x.UserName == username);
+                //    }
+                //}
+
+                //if(count < 1)
+                //{
+                //    Console.WriteLine($"No user found matching the search term {answer}");
+                //    Thread.Sleep(2000);
+                //    Console.Clear();
+                //    Display();
                     
-                }
+                //}
 
 
                 //foreach (var user in _users)
@@ -96,6 +101,8 @@ namespace MenuShellerlma.Views
             } while (loop);
             return "";
         }
+
+       
     }
 }
 

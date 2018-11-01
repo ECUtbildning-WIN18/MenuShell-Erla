@@ -1,4 +1,5 @@
 ﻿using MenuShellerlma.Domain;
+using MenuShellerlma.Service;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -37,17 +38,23 @@ namespace MenuShellerlma.Views
 
                 var answer = Console.ReadKey(true);
 
+                var user = new User(username, password, (Role)Enum.Parse(typeof(Role), role));
+
+
                 if (answer.Key == ConsoleKey.Y)
                 {
-                    var user = new User(username, password, (Role)Enum.Parse(typeof(Role), role));
+                    var sqlAdd = new AddSql();
 
-                    if (!_users.ContainsKey(user.UserName))
-                    {
-                        _users.Add(user.UserName, user);
-                    }
+                    sqlAdd.Add(user);
 
-                    ListUserView list = new ListUserView(_users);
-                    list.Display();
+                    loop = false;
+                    //if (!_users.ContainsKey(user.UserName))
+                    //{
+                    //    _users.Add(user.UserName, user);
+                    //}
+
+                    //ListUserView list = new ListUserView(_users);
+                    //list.Display();
 
                 }
                 else if (answer.Key == ConsoleKey.N)
